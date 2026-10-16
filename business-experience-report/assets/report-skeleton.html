@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{REPORT_TITLE}}</title>
+<style>
+:root{
+  --brand-900:#0A2A6B; --brand-800:#0F3C9E; --brand-700:#1552E0;
+  --brand-600:#2563EB; --brand-500:#3B82F6; --brand-300:#93C5FD; --brand-100:#DBEAFE;
+  --cyan-500:#06B6D4; --cyan-400:#22D3EE; --cyan-200:#A5F3FC;
+  --bg:#F3F6FC; --card:#FFFFFF;
+  --ink:#0B1220; --ink2:#334155; --muted:#5A6A80; --muted2:#5B6B84;
+  --line:#E3E9F2; --line2:#EEF3FA;
+  --ok:#0EA371; --warn:#D97706; --danger:#DC2626;
+  --radius:18px; --radius-lg:28px; --radius-sm:12px;
+  --shadow:0 12px 34px rgba(15,42,107,.09);
+  --shadow-sm:0 4px 14px rgba(15,42,107,.06);
+  --maxw:1180px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:15px; line-height:1.75; letter-spacing:.01em;
+}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px}
+main{padding-bottom:72px}
+
+/* ---------- 封面 Hero ---------- */
+.hero{
+  position:relative; overflow:hidden; border-radius:var(--radius-lg);
+  margin:28px 0 26px; padding:46px 44px 38px; color:#fff;
+  background:
+    radial-gradient(120% 140% at 88% 6%, rgba(165,243,252,.40) 0%, rgba(165,243,252,0) 46%),
+    linear-gradient(128deg,#08215C 0%,#0F3AAB 32%,#1450CC 62%,#1B6BDF 100%);
+  box-shadow:0 20px 48px rgba(12,52,150,.28);
+}
+.hero::after{
+  content:""; position:absolute; right:-140px; top:-190px; width:520px; height:820px;
+  transform:rotate(24deg); pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.20),rgba(255,255,255,0));
+}
+.hero-top{display:flex; align-items:center; gap:12px; flex-wrap:wrap; position:relative; z-index:1}
+.brandmark{
+  display:inline-flex; align-items:center; gap:9px; padding:7px 14px; border-radius:999px;
+  background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.34);
+  font-size:12px; font-weight:600; letter-spacing:.04em;
+}
+.brandmark i{width:8px;height:8px;border-radius:50%;background:#7DF3C4;display:inline-block}
+.eyebrow{
+  margin:16px 0 10px; font-size:11.5px; font-weight:700; letter-spacing:.22em;
+  text-transform:uppercase; color:rgba(255,255,255,.88); position:relative; z-index:1;
+}
+.hero h1{
+  margin:0 0 12px; font-size:44px; line-height:1.2; font-weight:800; letter-spacing:.01em;
+  position:relative; z-index:1; text-shadow:0 2px 18px rgba(4,24,74,.28);
+}
+.hero .sub{
+  margin:0 0 22px; max-width:820px; font-size:15.5px; line-height:1.7;
+  color:rgba(255,255,255,.94); position:relative; z-index:1;
+}
+.chips{display:flex; flex-wrap:wrap; gap:9px; position:relative; z-index:1; margin-bottom:24px}
+.chip{
+  padding:7px 15px; border-radius:999px; font-size:12.5px; font-weight:600;
+  background:rgba(255,255,255,.17); border:1px solid rgba(255,255,255,.40); color:#fff;
+  backdrop-filter:blur(4px); white-space:nowrap;
+}
+.hero-meta{
+  text-shadow:0 1px 6px rgba(4,18,60,.22);
+  position:relative; z-index:1; display:flex; flex-wrap:wrap; gap:10px 26px;
+  padding-top:18px; border-top:1px solid rgba(255,255,255,.26); font-size:12.5px;
+  color:#FFFFFF;
+}
+.hero-meta b{font-weight:700; color:#fff}
+
+/* ---------- 通用卡片 ---------- */
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+  padding:26px 28px; box-shadow:var(--shadow-sm); margin:0 0 20px;
+}
+.card.tight{padding:20px 22px}
+.card h3{margin:0 0 6px; font-size:19px; font-weight:750; letter-spacing:.01em}
+.card h4{margin:22px 0 10px; font-size:15.5px; font-weight:700; color:var(--brand-800)}
+.card h4:first-child{margin-top:6px}
+.card p{margin:0 0 12px; color:var(--ink2)}
+.card p:last-child{margin-bottom:0}
+.lead{font-size:16px; color:var(--ink)!important}
+
+/* ---------- 章节标题 ---------- */
+.sec{margin:44px 0 20px; display:flex; align-items:flex-start; gap:16px}
+.sec-no{
+  flex:0 0 auto; width:52px; height:52px; border-radius:16px; display:grid; place-items:center;
+  font-size:20px; font-weight:800; color:#fff;
+  background:linear-gradient(135deg,var(--brand-700),var(--cyan-500));
+  box-shadow:0 8px 20px rgba(21,82,224,.28);
+}
+.sec h2{margin:0; font-size:26px; font-weight:800; letter-spacing:.01em}
+.sec .sec-sub{margin:4px 0 0; font-size:13.5px; color:var(--muted)}
+.subsec{
+  margin:30px 0 14px; padding-left:14px; border-left:4px solid var(--brand-600);
+  font-size:17.5px; font-weight:750;
+}
+
+/* ---------- KPI 数字卡 ---------- */
+.kpi-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin:0 0 20px}
+.kpi{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+  padding:20px 22px; box-shadow:var(--shadow-sm);
+}
+.kpi-num{
+  font-size:32px; font-weight:800; color:var(--brand-600); line-height:1.15;
+  letter-spacing:-.01em; font-variant-numeric:tabular-nums;
+}
+.kpi-num small{font-size:15px; font-weight:700; margin-left:2px}
+.kpi-lab{margin-top:6px; font-size:12.5px; color:var(--muted); line-height:1.5}
+.kpi-src{margin-top:8px; font-size:11px; color:var(--muted2)}
+
+/* ---------- 网格 ---------- */
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:20px}
+.grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
+.grid4{display:grid; grid-template-columns:repeat(4,1fr); gap:14px}
+
+/* ---------- 表格 ---------- */
+table{width:100%; border-collapse:separate; border-spacing:0; font-size:13.5px}
+th,td{padding:11px 13px; text-align:left; vertical-align:top; border-bottom:1px solid var(--line2)}
+th{
+  background:var(--brand-100); color:var(--brand-900); font-weight:750; font-size:12.5px;
+  letter-spacing:.02em; border-bottom:1px solid #CFE0FB;
+}
+th:first-child{border-top-left-radius:10px} th:last-child{border-top-right-radius:10px}
+tbody tr:last-child td{border-bottom:none}
+td b{font-weight:700; color:var(--ink)}
+.tbl-wrap{border:1px solid var(--line); border-radius:14px; overflow:hidden; margin:4px 0 6px}
+
+/* ---------- 标签 ---------- */
+.tag{
+  display:inline-block; padding:2px 9px; border-radius:7px; font-size:11.5px; font-weight:750;
+  letter-spacing:.02em; white-space:nowrap;
+}
+.t-p0{background:#FEE2E2; color:#B91C1C}
+.t-p1{background:#FEF3C7; color:#B45309}
+.t-p2{background:#DBEAFE; color:#1D4ED8}
+.t-ok{background:#D1FAE5; color:#047857}
+.t-warn{background:#FEF3C7; color:#B45309}
+.t-bad{background:#FEE2E2; color:#B91C1C}
+
+/* ---------- 亮点 / 不足 双栏 ---------- */
+.pm{display:grid; grid-template-columns:1fr 1fr; gap:18px}
+.pm-col{border:1px solid var(--line); border-radius:var(--radius); padding:20px 22px; background:var(--card)}
+.pm-col.pro{border-top:4px solid var(--ok)}
+.pm-col.con{border-top:4px solid var(--danger)}
+.pm-col h4{margin:0 0 12px!important; font-size:15px!important; color:var(--ink)!important}
+ul.list{margin:0; padding-left:0; list-style:none}
+ul.list li{position:relative; padding-left:20px; margin-bottom:9px; font-size:13.5px; color:var(--ink2); line-height:1.68}
+ul.list li::before{
+  content:""; position:absolute; left:2px; top:9px; width:7px; height:7px; border-radius:2px;
+  background:var(--brand-500);
+}
+.pm-col.con ul.list li::before{background:#F0A6A6}
+ul.list li b{color:var(--ink)}
+
+/* ---------- 提示条 ---------- */
+.note{
+  border-left:4px solid var(--brand-500); background:#F5F9FF; border-radius:0 12px 12px 0;
+  padding:13px 18px; font-size:13px; color:var(--ink2); margin:14px 0;
+}
+.note.warn{border-left-color:var(--warn); background:#FFFBEB}
+.note.dim{border-left-color:var(--muted2); background:#F6F8FB; color:var(--muted)}
+.note b{color:var(--ink)}
+
+/* ---------- 截图 ---------- */
+.shots{display:grid; grid-template-columns:1fr 1fr; gap:18px}
+.shot{border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:var(--card); box-shadow:var(--shadow-sm)}
+.shot img{display:block; width:100%; height:auto}
+.shot .cap{padding:11px 14px; font-size:12px; color:var(--muted); border-top:1px solid var(--line2); background:#FBFCFE}
+.shot .cap b{color:var(--ink2); font-weight:700}
+.shot.tall img{max-height:300px; object-fit:cover; object-position:top}
+.evi{border:1px solid var(--line); border-radius:var(--radius); background:var(--card); padding:20px 22px; margin:0 0 18px; box-shadow:var(--shadow-sm)}
+.evi-hd{display:flex; align-items:flex-start; gap:10px; margin:0 0 15px}
+.evi-no{
+  flex:0 0 auto; padding:3px 10px; border-radius:8px; font-size:11px; font-weight:800;
+  letter-spacing:.06em; background:var(--brand-100); color:var(--brand-800); white-space:nowrap; margin-top:3px;
+}
+.evi-hd .evi-t{font-size:16px; font-weight:750; line-height:1.46}
+.evi-read{
+  margin:16px 0 0; padding:12px 16px; border-radius:12px; background:#F5F9FF;
+  border-left:4px solid var(--brand-500); font-size:13px; color:var(--ink2); line-height:1.7;
+}
+.evi-read b{color:var(--ink)}
+.shots.c1{grid-template-columns:1fr}
+
+/* ---------- 导航 ---------- */
+.nav{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:0 0 8px;
+}
+.nav a{
+  display:block; text-decoration:none; color:var(--ink); background:var(--card);
+  border:1px solid var(--line); border-radius:var(--radius); padding:16px 18px;
+  box-shadow:var(--shadow-sm); transition:.18s;
+}
+.nav a:hover{border-color:var(--brand-300); transform:translateY(-2px); box-shadow:var(--shadow)}
+.nav .no{font-size:11px; font-weight:800; letter-spacing:.14em; color:var(--brand-600)}
+.nav .ti{font-size:15px; font-weight:750; margin-top:3px}
+.nav .de{font-size:12px; color:var(--muted); margin-top:3px; line-height:1.5}
+
+/* ---------- 图示块 ---------- */
+.diagram{
+  background:linear-gradient(180deg,#FBFDFF,#F5F9FF); border:1px solid var(--line);
+  border-radius:var(--radius); padding:18px 16px 12px; margin:6px 0 10px; overflow-x:auto;
+}
+.diagram svg{display:block; margin:0 auto; max-width:100%; height:auto}
+.figcap{font-size:12px; color:var(--muted); text-align:center; margin:6px 0 0}
+
+/* ---------- 阶段路线图 ---------- */
+.phases{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
+.phase{border:1px solid var(--line); border-radius:var(--radius); background:var(--card); overflow:hidden; box-shadow:var(--shadow-sm)}
+.phase-hd{padding:16px 20px; color:#fff}
+.phase:nth-child(1) .phase-hd{background:linear-gradient(135deg,#0B2E7A,#1246C8)}
+.phase:nth-child(2) .phase-hd{background:linear-gradient(135deg,#103C9E,#1450D2)}
+.phase:nth-child(3) .phase-hd{background:linear-gradient(135deg,#1552E0,#1668DE)}
+.phase-hd .ph-t{font-size:11px; font-weight:800; letter-spacing:.16em; opacity:1}
+.phase-hd .ph-n{font-size:17px; font-weight:800; margin-top:3px}
+.phase-bd{padding:16px 20px}
+.phase-bd dl{margin:0}
+.phase-bd dt{font-size:11.5px; font-weight:800; color:var(--brand-700); letter-spacing:.06em; margin:12px 0 5px}
+.phase-bd dt:first-child{margin-top:0}
+.phase-bd dd{margin:0; font-size:13px; color:var(--ink2); line-height:1.66}
+.phase-bd ul.list li{font-size:13px; margin-bottom:6px}
+
+/* ---------- 指标树 ---------- */
+.tree{border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:var(--card)}
+.tree-row{display:grid; grid-template-columns:150px 1fr; border-bottom:1px solid var(--line2)}
+.tree-row:last-child{border-bottom:none}
+.tree-hd{background:#F5F9FF; padding:14px 18px; font-size:13px; font-weight:800; color:var(--brand-800); border-right:1px solid var(--line2)}
+.tree-bd{padding:14px 18px; font-size:13px; color:var(--ink2)}
+
+/* ---------- 附录来源 ---------- */
+.srcs{font-size:12.5px; color:var(--ink2)}
+.srcs ol{margin:0; padding-left:22px}
+.srcs li{margin-bottom:8px; line-height:1.62}
+.srcs code{
+  background:#F1F5FB; padding:1px 6px; border-radius:5px; font-size:11.5px;
+  color:var(--brand-800); word-break:break-all;
+}
+footer{
+  margin-top:36px; padding:22px 0 0; border-top:1px solid var(--line);
+  font-size:12px; color:var(--muted2); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+}
+
+/* ---------- 打印 ---------- */
+@page{size:A4; margin:12mm}
+@media print{
+  body{background:#fff; font-size:12.4px}
+  .wrap{max-width:none; padding:0}
+  .card,.kpi,.shot,.phase,.tree,.diagram,.pm-col,.nav a{box-shadow:none!important}
+  .card,.kpi,.phase,.shot,.pm-col,.tree,.diagram{break-inside:avoid; page-break-inside:avoid}
+  .sec{break-after:avoid; page-break-after:avoid}
+  .subsec{break-after:avoid; page-break-after:avoid}
+  .hero{break-inside:avoid; margin-top:0}
+  .nav{display:none}
+  a{color:inherit; text-decoration:none}
+}
+@media (max-width:900px){
+  .hero{padding:32px 24px 26px} .hero h1{font-size:30px}
+  .kpi-grid,.grid3,.grid4,.phases,.grid2,.pm,.shots,.shots.c1,.nav{grid-template-columns:1fr}
+  .tree-row{grid-template-columns:1fr}
+  .tree-hd{border-right:none; border-bottom:1px solid var(--line2)}
+}
+</style>
+</head>
+<body>
+<!-- ================================================================
+     report-skeleton.html —— 业务体验分析报告骨架
+     用法：整份复制，把所有 {{XXX_YYY}} 占位符替换为真实内容，删掉不需要的段落。
+     占位符约定：双花括号大写名，可用 grep -o '{{[A-Z0-9_]*}}' 列出全部待填项。
+     组件速查：
+       .hero 封面 / .kpi-grid 指标卡 / .nav 导航 / .sec+.subsec 章节 /
+       .card 卡片 / .tbl-wrap+table 表格 / .tag 优先级标签 / .pm 亮点·不足双栏 /
+       .note 提示条 / .diagram+svg 图示 / .evi 论点—证据图组 / .phases+.phase 阶段卡 /
+       .tree 指标树 / .srcs 来源列表
+     注意：SVG 内的文字不要超出 viewBox（会被静默裁切），图注用 .figcap 或 .note 承载。
+     ================================================================ -->
+
+<div class="wrap">
+<main>
+
+<!-- ============================================================
+     封面 Hero
+     替换：品牌名 / eyebrow / 主标题 / 副标题（必须含被回答的业务问题）/ chips / meta
+     ============================================================ -->
+<header class="hero">
+  <div class="hero-top">
+    <span class="brandmark"><i></i>{{PRODUCT_NAME}}</span>
+    <span class="brandmark" style="background:rgba(255,255,255,.10)">{{VIEWPOINT}}</span>
+  </div>
+  <div class="eyebrow">{{PRODUCT_EN}} &nbsp;·&nbsp; Business Experience Review</div>
+  <h1>{{REPORT_TITLE}}</h1>
+  <p class="sub">
+    一次完整的{{EXPERIENCE_TYPE}}体验，回答一个具体问题：<b>{{CORE_QUESTION}}</b>
+    报告覆盖业务背景、业务诊断、业务解决方案三个层面，所有结论均可追溯到公开信息、官网实操与用户原声。
+  </p>
+  <div class="chips">
+    <span class="chip">业务背景</span>
+    <span class="chip">业务诊断</span>
+    <span class="chip">业务解决方案</span>
+    <span class="chip">AARRR</span>
+    <span class="chip">RFM 分层</span>
+    <span class="chip">CLM 生命周期</span>
+    <span class="chip">5A 模型</span>
+  </div>
+  <div class="hero-meta">
+    <span>体验时间：<b>{{DATE}}</b></span>
+    <span>体验对象：<b>{{TARGET}}</b></span>
+    <span>数据口径：<b>{{DATA_SCOPE}}</b></span>
+  </div>
+</header>
+
+<!-- ============================================================
+     关键数字卡 ×4 —— 每张必须写来源，且正文中要引用到
+     ============================================================ -->
+<div class="kpi-grid">
+  <div class="kpi">
+    <div class="kpi-num">{{N1}}<small>{{U1}}</small></div>
+    <div class="kpi-lab">{{LAB1}}</div>
+    <div class="kpi-src">来源：{{SRC1}}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-num">{{N2}}<small>{{U2}}</small></div>
+    <div class="kpi-lab">{{LAB2}}</div>
+    <div class="kpi-src">来源：{{SRC2}}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-num">{{N3}}<small>{{U3}}</small></div>
+    <div class="kpi-lab">{{LAB3}}</div>
+    <div class="kpi-src">来源：{{SRC3}}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-num">{{N4}}<small>{{U4}}</small></div>
+    <div class="kpi-lab">{{LAB4}}</div>
+    <div class="kpi-src">来源：{{SRC4}}</div>
+  </div>
+</div>
+
+<!-- 阅读导航（打印时自动隐藏） -->
+<div class="nav">
+  <a href="#ch1"><div class="no">CHAPTER 01</div><div class="ti">{{PRODUCT_NAME}} 业务背景</div><div class="de">公司背景与产品定位 · 行业背景与目标用户画像</div></a>
+  <a href="#ch2"><div class="no">CHAPTER 02</div><div class="ti">{{PRODUCT_NAME}} 业务诊断</div><div class="de">业务流程与核心路径体验 · 根因分析</div></a>
+  <a href="#ch3"><div class="no">CHAPTER 03</div><div class="ti">{{PRODUCT_NAME}} 业务解决方案规划</div><div class="de">指标体系 · 3 / 6 / 12 月三阶段 · 验证与监测</div></a>
+</div>
+
+<!-- ============================================================
+     摘要：一句话结论
+     ============================================================ -->
+<div class="card" style="margin-top:22px">
+  <h3>摘要：一句话结论</h3>
+  <p class="lead">{{SUMMARY_LEAD}}</p>
+  <div class="grid2" style="margin-top:6px">
+    <div class="note warn" style="margin:0">
+      <b>核心矛盾（诊断结论）</b><br>{{SUMMARY_DIAGNOSIS}}
+    </div>
+    <div class="note" style="margin:0">
+      <b>解决主线（方案结论）</b><br>{{SUMMARY_SOLUTION}}
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     第一章 业务背景
+     ============================================================ -->
+<section id="ch1">
+  <div class="sec">
+    <div class="sec-no">01</div>
+    <div>
+      <h2>业务背景</h2>
+      <div class="sec-sub">这一章回答：这是谁的产品、为谁而做、市场处在什么位置</div>
+    </div>
+  </div>
+
+  <div class="subsec">1.1 公司背景与产品定位</div>
+  <div class="card">
+    <p>需包含：公司主体与上市/融资情况、近两年营收与增速、集团业务版图、本品在版图中的战略位置、一句话产品定位、以及<b>护城河判断</b>（它占据了什么别人替代不了的位置）。</p>
+    <div class="note dim">数据口径提示：财务数据标年份与来源；不确定的数字标注为推演值。</div>
+  </div>
+
+  <div class="subsec">1.2 行业背景与目标用户画像</div>
+  <div class="card">
+    <p>需包含：行业规模 / 渗透率 / 增速，以及 2–4 类用户画像。</p>
+    <div class="grid2" style="margin-top:12px">
+      <!-- 画像卡 ×2~4 -->
+      <div class="note"><b>画像一｜{{PERSONA1_ROLE}}</b><br>{{PERSONA1_DESC}}</div>
+      <div class="note"><b>画像二｜{{PERSONA2_ROLE}}</b><br>{{PERSONA2_DESC}}</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     第二章 业务诊断（报告核心）
+     ============================================================ -->
+<section id="ch2">
+  <div class="sec">
+    <div class="sec-no">02</div>
+    <div>
+      <h2>业务诊断</h2>
+      <div class="sec-sub">这一章回答：产品现在的真实状态是什么，问题卡在哪一环</div>
+    </div>
+  </div>
+
+  <div class="subsec">2.1 业务流程与核心路径体验</div>
+
+  <div class="card">
+    <h4>核心板块与功能清单</h4>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:26%">板块</th><th>核心功能</th></tr></thead>
+        <tbody>
+          <tr><td><b>{{MODULE_1}}</b></td><td>{{MODULE_1_FUNCS}}</td></tr>
+          <tr><td><b>{{MODULE_2}}</b></td><td>{{MODULE_2_FUNCS}}</td></tr>
+          <tr><td><b>{{MODULE_3}}</b></td><td>{{MODULE_3_FUNCS}}</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>业务转化流转图</h4>
+    <!-- SVG 图示：替换为真实流转图。注意：注释文字不要超出 viewBox -->
+    <div class="diagram">
+      <svg viewBox="0 0 960 200" width="960" height="200" role="img" aria-label="业务转化流转图">
+        <g font-family="-apple-system,sans-serif">
+          <rect x="30"  y="60" width="170" height="70" rx="14" fill="#DBEAFE" stroke="#2563EB"/>
+          <text x="115" y="92" text-anchor="middle" font-size="14" font-weight="700" fill="#0F3C9E">触达 / 访问</text>
+          <text x="115" y="112" text-anchor="middle" font-size="12" fill="#334155">各获客渠道</text>
+          <path d="M210 95 H260" stroke="#94A3B8" stroke-width="2" marker-end="url(#a1)"/>
+          <rect x="270" y="60" width="170" height="70" rx="14" fill="#DBEAFE" stroke="#2563EB"/>
+          <text x="355" y="92" text-anchor="middle" font-size="14" font-weight="700" fill="#0F3C9E">注册</text>
+          <text x="355" y="112" text-anchor="middle" font-size="12" fill="#334155">填写企业信息</text>
+          <path d="M450 95 H500" stroke="#94A3B8" stroke-width="2" marker-end="url(#a1)"/>
+          <rect x="510" y="60" width="170" height="70" rx="14" fill="#DBEAFE" stroke="#2563EB"/>
+          <text x="595" y="92" text-anchor="middle" font-size="14" font-weight="700" fill="#0F3C9E">首次登录</text>
+          <text x="595" y="112" text-anchor="middle" font-size="12" fill="#334155">试用激活</text>
+          <path d="M690 95 H740" stroke="#94A3B8" stroke-width="2" marker-end="url(#a1)"/>
+          <rect x="750" y="60" width="180" height="70" rx="14" fill="#D1FAE5" stroke="#0EA371"/>
+          <text x="840" y="92" text-anchor="middle" font-size="14" font-weight="700" fill="#047857">深度使用 / 付费</text>
+          <text x="840" y="112" text-anchor="middle" font-size="12" fill="#334155">转化与续费</text>
+          <defs><marker id="a1" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+            <path d="M0 0 L8 4 L0 8 z" fill="#94A3B8"/></marker></defs>
+        </g>
+      </svg>
+      <p class="figcap">图 2-1　业务转化流转图（替换为真实链路）</p>
+    </div>
+
+    <h4>现有运营手段</h4>
+    <ul class="list">
+      <li>{{OPS_1}}（注意标注活动起止时间与是否已到期）</li>
+      <li>{{OPS_2}}</li>
+    </ul>
+
+    <h4>获客渠道与来源结构</h4>
+    <p>{{CHANNELS}}</p>
+
+    <h4>当前定价情况与策略</h4>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>版本</th><th>价格</th><th>包含能力</th><th>限制</th></tr></thead>
+        <tbody>
+          <tr><td><b>{{PLAN_FREE}}</b></td><td>¥0</td><td>{{PLAN_FREE_FEAT}}</td><td>{{PLAN_FREE_LIMIT}}</td></tr>
+          <tr><td><b>{{PLAN_PAID}}</b></td><td>{{PLAN_PAID_PRICE}}</td><td>{{PLAN_PAID_FEAT}}</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 论点—证据图分组：按「发现的问题」分组，不要按页面顺序堆图 -->
+  <div class="evi">
+    <div class="evi-hd">
+      <span class="evi-no">证据 01</span>
+      <div class="evi-t">{{EVIDENCE_1_CLAIM}}（这一组图要证明的那句话）</div>
+    </div>
+    <div class="shots">
+      <div class="shot">
+        <img src="shots/w01-example.jpg" alt="{{SHOT_1_ALT}}">
+        <div class="cap"><b>{{SHOT_1_TITLE}}</b>　{{SHOT_1_READ}}</div>
+      </div>
+      <div class="shot">
+        <img src="shots/w02-example.jpg" alt="{{SHOT_2_ALT}}">
+        <div class="cap"><b>{{SHOT_2_TITLE}}</b>　{{SHOT_2_READ}}</div>
+      </div>
+    </div>
+    <div class="evi-read"><b>读法：</b>{{EVIDENCE_1_READING}}（引回根因编号，如「指向根因 R2」）</div>
+  </div>
+
+  <div class="pm" style="margin-top:6px">
+    <div class="pm-col pro">
+      <h4>体验亮点</h4>
+      <ul class="list">
+        <li><b>{{PRO_1}}</b>　{{PRO_1_DETAIL}}</li>
+        <li><b>{{PRO_2}}</b>　{{PRO_2_DETAIL}}</li>
+      </ul>
+    </div>
+    <div class="pm-col con">
+      <h4>体验不足</h4>
+      <ul class="list">
+        <li><b>{{CON_1}}</b>　{{CON_1_DETAIL}}</li>
+        <li><b>{{CON_2}}</b>　{{CON_2_DETAIL}}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="subsec">2.2 试用激活率低的根因分析</div>
+
+  <div class="card">
+    <h4>第一步：定义激活标准</h4>
+    <p>{{ACTIVATION_STANDARD}}（优先复用产品方已有口径）</p>
+
+    <h4>第二步：激活漏斗与流失定位</h4>
+    <div class="diagram">
+      <svg viewBox="0 0 960 300" width="960" height="300" role="img" aria-label="激活漏斗">
+        <g font-family="-apple-system,sans-serif">
+          <rect x="330" y="20"  width="300" height="42" rx="10" fill="#1552E0"/>
+          <text x="480" y="47" text-anchor="middle" font-size="14" font-weight="700" fill="#FFFFFF">注册 · 100%</text>
+          <rect x="360" y="80"  width="240" height="42" rx="10" fill="#2E7BE8"/>
+          <text x="480" y="107" text-anchor="middle" font-size="14" font-weight="700" fill="#FFFFFF">首次登录 · {{P2}}</text>
+          <rect x="395" y="140" width="170" height="42" rx="10" fill="#1668DE"/>
+          <text x="480" y="167" text-anchor="middle" font-size="14" font-weight="700" fill="#FFFFFF">完成建档 · {{P3}}</text>
+          <rect x="425" y="200" width="110" height="42" rx="10" fill="#0F3AAB"/>
+          <text x="480" y="227" text-anchor="middle" font-size="14" font-weight="700" fill="#FFFFFF">激活 · {{P4}}</text>
+        </g>
+      </svg>
+      <p class="figcap">图 2-2　试用激活漏斗：从注册到激活（替换为真实比率）</p>
+    </div>
+    <div class="note dim" style="margin-bottom:0">注：各环节比率为基于公开信息的推演值（非官方数据），用于确定优化优先级，需接入真实埋点后校准。</div>
+
+    <h4>第三步：多维下钻</h4>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>维度</th><th>分层</th><th>表现</th><th>推断</th></tr></thead>
+        <tbody>
+          <tr><td><b>行为分层</b></td><td>{{B1}}</td><td>{{B1_DATA}}</td><td>{{B1_READ}}</td></tr>
+          <tr><td><b>来源分层</b></td><td>{{S1}}</td><td>{{S1_DATA}}</td><td>{{S1_READ}}</td></tr>
+          <tr><td><b>定性</b></td><td>用户原声</td><td>{{Q_DATA}}</td><td>{{Q_READ}}</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>第四步：根因与优先级</h4>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:9%">编号</th><th style="width:30%">根因</th><th>影响面</th><th>证据</th><th style="width:9%">级别</th></tr></thead>
+        <tbody>
+          <tr><td><b>R1</b></td><td>{{R1}}</td><td>{{R1_IMPACT}}</td><td>{{R1_EVIDENCE}}</td><td><span class="tag t-p0">P0</span></td></tr>
+          <tr><td><b>R2</b></td><td>{{R2}}</td><td>{{R2_IMPACT}}</td><td>{{R2_EVIDENCE}}</td><td><span class="tag t-p0">P0</span></td></tr>
+          <tr><td><b>R3</b></td><td>{{R3}}</td><td>{{R3_IMPACT}}</td><td>{{R3_EVIDENCE}}</td><td><span class="tag t-p1">P1</span></td></tr>
+          <tr><td><b>R4</b></td><td>{{R4}}</td><td>{{R4_IMPACT}}</td><td>{{R4_EVIDENCE}}</td><td><span class="tag t-p2">P2</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note warn">
+      <b>结论：是谁、在哪个环节、因何流失</b><br>
+      {{ROOT_CONCLUSION}}
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     第三章 业务解决方案
+     ============================================================ -->
+<section id="ch3">
+  <div class="sec">
+    <div class="sec-no">03</div>
+    <div>
+      <h2>业务解决方案规划</h2>
+      <div class="sec-sub">这一章回答：怎么解决、分几步、怎么证明有效、谁来配合、要花多少</div>
+    </div>
+  </div>
+
+  <div class="subsec">3.1 问题定义标准与关键指标体系</div>
+  <div class="card">
+    <h4>问题定义标准</h4>
+    <p>{{PROBLEM_DEFINITION}}</p>
+    <h4>指标体系</h4>
+    <div class="tree">
+      <div class="tree-row"><div class="tree-hd">北极星指标</div><div class="tree-bd"><b>{{NORTH_STAR}}</b>　{{NORTH_STAR_WHY}}</div></div>
+      <div class="tree-row"><div class="tree-hd">驱动指标</div><div class="tree-bd">{{DRIVER_METRICS}}</div></div>
+      <div class="tree-row"><div class="tree-hd">健康指标</div><div class="tree-bd">{{HEALTH_METRICS}}</div></div>
+    </div>
+  </div>
+
+  <div class="subsec">3.2 三阶段解决方案（3 / 6 / 12 个月）</div>
+  <div class="card tight">
+    <p class="dim" style="font-size:12.5px;color:var(--muted)">每阶段须齐 6 项：阶段目标 / 关键动作 / 里程碑 / 达成效果预估 / 配合部门 / 资源投入，并标注方法论映射与 Non-goals。</p>
+  </div>
+  <div class="phases">
+    <div class="phase">
+      <div class="phase-hd"><div class="ph-t">PHASE 01 · 0 → 3 个月</div><div class="ph-n">修断崖</div></div>
+      <div class="phase-bd">
+        <dl>
+          <dt>阶段目标</dt><dd>{{P1_GOAL}}</dd>
+          <dt>关键动作</dt><dd>{{P1_ACTIONS}}</dd>
+          <dt>里程碑</dt><dd>{{P1_MILESTONE}}</dd>
+          <dt>效果预估</dt><dd>{{P1_RESULT}}</dd>
+          <dt>配合部门</dt><dd>{{P1_DEPTS}}</dd>
+          <dt>资源投入</dt><dd>{{P1_BUDGET}}</dd>
+          <dt>方法论映射</dt><dd>AARRR（Activation 优先）</dd>
+          <dt>Non-goals</dt><dd>{{P1_NONGOALS}}</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-hd"><div class="ph-t">PHASE 02 · 3 → 6 个月</div><div class="ph-n">体系化</div></div>
+      <div class="phase-bd">
+        <dl>
+          <dt>阶段目标</dt><dd>{{P2_GOAL}}</dd>
+          <dt>关键动作</dt><dd>{{P2_ACTIONS}}</dd>
+          <dt>里程碑</dt><dd>{{P2_MILESTONE}}</dd>
+          <dt>效果预估</dt><dd>{{P2_RESULT}}</dd>
+          <dt>配合部门</dt><dd>{{P2_DEPTS}}</dd>
+          <dt>资源投入</dt><dd>{{P2_BUDGET}}</dd>
+          <dt>方法论映射</dt><dd>RFM（分人群）× CLM（生命周期）× 5A（内容种草）</dd>
+          <dt>Non-goals</dt><dd>{{P2_NONGOALS}}</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-hd"><div class="ph-t">PHASE 03 · 6 → 12 个月</div><div class="ph-n">跑飞轮</div></div>
+      <div class="phase-bd">
+        <dl>
+          <dt>阶段目标</dt><dd>{{P3_GOAL}}</dd>
+          <dt>关键动作</dt><dd>{{P3_ACTIONS}}</dd>
+          <dt>里程碑</dt><dd>{{P3_MILESTONE}}</dd>
+          <dt>效果预估</dt><dd>{{P3_RESULT}}</dd>
+          <dt>配合部门</dt><dd>{{P3_DEPTS}}</dd>
+          <dt>资源投入</dt><dd>{{P3_BUDGET}}</dd>
+          <dt>方法论映射</dt><dd>AARRR 全链路 + Referral 裂变</dd>
+          <dt>Non-goals</dt><dd>{{P3_NONGOALS}}</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsec">3.3 方案有效性验证方法与落地路径</div>
+  <div class="card">
+    <h4>验证方法</h4>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>方案</th><th>验证方式</th><th>样本与周期</th><th>成功判据</th></tr></thead>
+        <tbody>
+          <tr><td>{{V1}}</td><td>A/B 测试</td><td>{{V1_SAMPLE}}</td><td>{{V1_CRITERIA}}</td></tr>
+          <tr><td>{{V2}}</td><td>前后对比</td><td>{{V2_SAMPLE}}</td><td>{{V2_CRITERIA}}</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>关键数据指标监测体系</h4>
+    <div class="diagram">
+      <svg viewBox="0 0 960 260" width="960" height="260" role="img" aria-label="指标监测体系">
+        <g font-family="-apple-system,sans-serif">
+          <rect x="40" y="30" width="880" height="44" rx="12" fill="#DBEAFE" stroke="#2563EB"/>
+          <text x="60" y="58" font-size="13" font-weight="700" fill="#0F3C9E">采集层</text>
+          <text x="150" y="58" font-size="12.5" fill="#334155">埋点事件 · 业务库 · 客服工单 · 渠道回传</text>
+          <rect x="40" y="86" width="880" height="44" rx="12" fill="#D1FAE5" stroke="#0EA371"/>
+          <text x="60" y="114" font-size="13" font-weight="700" fill="#047857">加工层</text>
+          <text x="150" y="114" font-size="12.5" fill="#334155">指标口径定义 · 分层标签 · 漏斗聚合</text>
+          <rect x="40" y="142" width="880" height="44" rx="12" fill="#FEF3C7" stroke="#D97706"/>
+          <text x="60" y="170" font-size="13" font-weight="700" fill="#92400E">看板层</text>
+          <text x="150" y="170" font-size="12.5" fill="#334155">北极星看板 · 激活漏斗 · 渠道 ROI · 分层健康</text>
+          <rect x="40" y="198" width="880" height="44" rx="12" fill="#E5E7EB" stroke="#64748B"/>
+          <text x="60" y="226" font-size="13" font-weight="700" fill="#334155">决策层</text>
+          <text x="150" y="226" font-size="12.5" fill="#334155">周会复盘 · 预算调拨 · 实验结论入库 · SOP 更新</text>
+        </g>
+      </svg>
+      <p class="figcap">图 3-1　指标监测体系四层结构</p>
+    </div>
+
+    <h4>落地路径与 RACI</h4>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>关键动作</th><th>R 负责</th><th>A 拍板</th><th>C 咨询</th><th>I 知会</th></tr></thead>
+        <tbody>
+          <tr><td>{{ACT_1}}</td><td>{{R1_OWNER}}</td><td>{{A1_OWNER}}</td><td>{{C1_OWNER}}</td><td>{{I1_OWNER}}</td></tr>
+          <tr><td>{{ACT_2}}</td><td>{{R2_OWNER}}</td><td>{{A2_OWNER}}</td><td>{{C2_OWNER}}</td><td>{{I2_OWNER}}</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsec">3.4 运营体系配套：四张表与一套 SOP</div>
+  <div class="card">
+    <h4>表 1　试用分层 × 运营策略矩阵</h4>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>分层</th><th>判定条件</th><th>运营目标</th><th>触达方式</th><th>关键指标</th></tr></thead>
+        <tbody>
+          <tr><td><b>L0 已注册未登录</b></td><td>注册后未登录</td><td>促成首次登录</td><td>短信 / 邮件 / 企微</td><td>首登率</td></tr>
+          <tr><td><b>L1 浅层试用</b></td><td>登录未完成建档</td><td>引导关键动作</td><td>站内引导 + 人工</td><td>建档完成率</td></tr>
+          <tr><td><b>L2 深度试用</b></td><td>建档未跨角色</td><td>促成协作</td><td>邀请裂变</td><td>协作激活率</td></tr>
+          <tr><td><b>L3 已激活</b></td><td>达激活标准</td><td>转化付费</td><td>权益提示 + 人工</td><td>付费转化率</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>表 2　渠道追踪与 ROI 评估</h4>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>渠道</th><th>追踪方式</th><th>获客成本</th><th>激活率</th><th>激活单价</th><th>结论</th></tr></thead>
+        <tbody>
+          <tr><td>{{CH_A}}</td><td>{{CH_A_TRACK}}</td><td>{{CH_A_COST}}</td><td>{{CH_A_RATE}}</td><td>{{CH_A_UNIT}}</td><td>{{CH_A_VERDICT}}</td></tr>
+          <tr><td>{{CH_B}}</td><td>{{CH_B_TRACK}}</td><td>{{CH_B_COST}}</td><td>{{CH_B_RATE}}</td><td>{{CH_B_UNIT}}</td><td>{{CH_B_VERDICT}}</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note dim">关键口径：<b>激活单价 = 获客成本 ÷ 该渠道激活率</b>。只认激活，不认注册——只按注册结算会系统性高估渠道效果。</div>
+
+    <h4>表 3　全流程运营策略查表 + 线索评分分层</h4>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>生命周期阶段</th><th>触发条件</th><th>运营动作</th><th>话术要点</th><th>责任人</th></tr></thead>
+        <tbody>
+          <tr><td>{{LC_1}}</td><td>{{LC_1_TRIGGER}}</td><td>{{LC_1_ACTION}}</td><td>{{LC_1_SCRIPT}}</td><td>{{LC_1_OWNER}}</td></tr>
+          <tr><td>{{LC_2}}</td><td>{{LC_2_TRIGGER}}</td><td>{{LC_2_ACTION}}</td><td>{{LC_2_SCRIPT}}</td><td>{{LC_2_OWNER}}</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>表 4　内容资产清单</h4>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>资产类型</th><th>面向阶段</th><th>目标用户</th><th>分发渠道</th><th>生产节奏</th></tr></thead>
+        <tbody>
+          <tr><td>{{CA_1}}</td><td>{{CA_1_STAGE}}</td><td>{{CA_1_USER}}</td><td>{{CA_1_CH}}</td><td>{{CA_1_FREQ}}</td></tr>
+          <tr><td>{{CA_2}}</td><td>{{CA_2_STAGE}}</td><td>{{CA_2_USER}}</td><td>{{CA_2_CH}}</td><td>{{CA_2_FREQ}}</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">待沉淀 SOP（建议 6 份）：新租户首周触达 · 断崖预警干预 · 渠道复盘 · 内容选题与发布 · A/B 实验立项 · 付费转化跟进。</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     附录 A · 信息来源与数据口径
+     ============================================================ -->
+<section id="appendix">
+  <div class="sec">
+    <div class="sec-no">A</div>
+    <div>
+      <h2>信息来源与数据口径</h2>
+      <div class="sec-sub">全部结论的证据落点</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="srcs">
+      <h4>一、公开信息</h4>
+      <ol>
+        <li>产品官网首页 —— <code>{{URL_1}}</code></li>
+        <li>定价页 —— <code>{{URL_2}}</code></li>
+      </ol>
+      <h4>二、用户社区原声</h4>
+      <ol>
+        <li>{{REVIEW_1}} —— {{REVIEW_1_SRC}}</li>
+      </ol>
+      <h4>三、行业公开报告</h4>
+      <ol>
+        <li>{{INDUSTRY_1}}</li>
+      </ol>
+      <h4>四、实测</h4>
+      <ol>
+        <li>体验账号：测试账号 1 个（凭据不记录）；体验时间：{{DATE}}</li>
+      </ol>
+    </div>
+    <div class="note warn">数据口径与局限声明：{{LIMITATION}}（说明哪些是实测、哪些是推演、哪些区域未覆盖）</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     附录 B · 岗位能力对标自查（求职场景；非求职场景整段删除）
+     ============================================================ -->
+<section id="appendix-b">
+  <div class="sec">
+    <div class="sec-no">B</div>
+    <div>
+      <h2>岗位能力对标自查</h2>
+      <div class="sec-sub">JD 每一条职责 → 本报告第几章答了什么</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:26%">JD 职责</th><th>报告落点</th><th style="width:22%">自评</th></tr></thead>
+        <tbody>
+          <tr><td><b>{{JD_1}}</b></td><td>{{JD_1_LANDING}}</td><td>{{JD_1_SELF}}</td></tr>
+          <tr><td><b>{{JD_2}}</b></td><td>{{JD_2_LANDING}}</td><td>{{JD_2_SELF}}</td></tr>
+          <tr><td><b>{{JD_3}}</b></td><td>{{JD_3_LANDING}}</td><td>{{JD_3_SELF}}</td></tr>
+          <tr><td><b>{{JD_4}}</b></td><td>{{JD_4_LANDING}}</td><td>{{JD_4_SELF}}</td></tr>
+          <tr><td><b>{{JD_5}}</b></td><td>{{JD_5_LANDING}}</td><td>{{JD_5_SELF}}</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note"><b>本报告坚持的三件事：</b>① 用实测证据修正假设，而非照抄文档；② 不编造数据，推演值显式标注；③ 每条建议都必须可验收。</div>
+  </div>
+</section>
+
+<footer>
+  <span>{{PRODUCT_NAME}} · 业务体验分析报告</span>
+  <span>制作：{{AUTHOR}}　｜　{{DATE}}</span>
+</footer>
+
+</main>
+</div>
+
+</body>
+</html>
